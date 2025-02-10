@@ -7,9 +7,13 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.bson.Document;
 
@@ -21,6 +25,9 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
 
     private MongoDatabase db;
     private MongoCollection<Document> encuestas;
+    private MongoCollection<Document> preguntas;
+
+    int xMouse, yMouse;
 
     /**
      * Creates new form Formulario_Encuesta
@@ -30,9 +37,10 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
             MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
             db = mongoClient.getDatabase("encuestasAED");
             encuestas = db.getCollection("encuestas");
+            preguntas = db.getCollection("preguntas");
             System.out.println("Conexión exitosa");
         } catch (Exception ex) {
-                Logger.getLogger(Formulario_Encuesta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Formulario_Encuesta.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
     }
@@ -46,6 +54,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bg = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -76,198 +85,275 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtaActualizar = new javax.swing.JTextArea();
+        header = new javax.swing.JPanel();
+        exitBtn = new javax.swing.JPanel();
+        exitTxt = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        savePreguntasBtn = new javax.swing.JButton();
+        doEncuestaBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel1.setText("FORMULARIO");
+        bg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 6, -1, -1));
+        bg.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 34, 1188, 10));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setText("Nº Encuesta:");
+        bg.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 52, -1, -1));
 
+        txtNoEnc.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtNoEnc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNoEncActionPerformed(evt);
             }
         });
+        bg.add(txtNoEnc, new org.netbeans.lib.awtextra.AbsoluteConstraints(146, 50, 75, -1));
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel3.setText("Nombre de la Encuesta:");
+        bg.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 90, -1, -1));
 
+        txtNomEnc.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtNomEnc, new org.netbeans.lib.awtextra.AbsoluteConstraints(214, 88, 271, -1));
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel4.setText("Nº");
+        bg.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 133, 37, -1));
 
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setText("Pregunta");
+        bg.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 133, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setText("1.-");
+        bg.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 170, 37, -1));
 
+        jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setText("2.-");
+        bg.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 211, 37, -1));
 
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setText("3.-");
+        bg.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 251, 37, -1));
 
+        jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setText("4.-");
+        bg.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 289, 37, -1));
 
+        jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel10.setText("5.-");
+        bg.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 325, 43, -1));
 
+        txtPregu1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtPregu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPregu1ActionPerformed(evt);
             }
         });
+        bg.add(txtPregu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 168, 237, -1));
 
+        txtPregu2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtPregu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 209, 237, -1));
+
+        txtPregu3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtPregu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 249, 237, -1));
+
+        txtPregu4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtPregu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 287, 237, -1));
+
+        txtPregu5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtPregu5, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 323, 237, -1));
+
+        jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel11.setText("Respuesta");
+        bg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 133, -1, -1));
 
+        txtRespu1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtRespu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 168, 245, -1));
+
+        txtRespu2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtRespu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 209, 245, -1));
+
+        txtRespu3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtRespu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 249, 245, -1));
+
+        txtRespu4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtRespu4, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 287, 245, -1));
+
+        txtRespu5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        bg.add(txtRespu5, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 323, 245, -1));
+
+        btnAgregar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
+        bg.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 412, -1, -1));
+        bg.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 382, 1176, 10));
 
+        btnBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
+        bg.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 412, -1, -1));
 
+        btnEditar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
+        bg.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(346, 412, -1, -1));
 
+        btnEliminar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
+        bg.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(489, 412, -1, -1));
 
+        btnLimpiar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
             }
         });
+        bg.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(627, 412, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtNoEnc, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtNomEnc, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5)
-                                .addComponent(txtPregu1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-                                .addComponent(txtPregu2)
-                                .addComponent(txtPregu3)
-                                .addComponent(txtPregu4)
-                                .addComponent(txtPregu5))
-                            .addGap(89, 89, 89)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(378, 378, 378)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel11)
-                    .addComponent(txtRespu1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(txtRespu2)
-                    .addComponent(txtRespu3)
-                    .addComponent(txtRespu4)
-                    .addComponent(txtRespu5))
-                .addGap(58, 58, 58))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(btnAgregar)
-                .addGap(60, 60, 60)
-                .addComponent(btnBuscar)
-                .addGap(66, 66, 66)
-                .addComponent(btnEditar)
-                .addGap(69, 69, 69)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addComponent(btnLimpiar)
-                .addGap(42, 42, 42))
-            .addComponent(jSeparator2)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(325, 325, 325)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        txtaActualizar.setColumns(20);
+        txtaActualizar.setRows(5);
+        jScrollPane1.setViewportView(txtaActualizar);
+
+        bg.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, 420, 320));
+
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+
+        exitBtn.setPreferredSize(new java.awt.Dimension(51, 50));
+        exitBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitBtnMouseEntered(evt);
+            }
+        });
+
+        exitTxt.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exitTxt.setText("X");
+        exitTxt.setPreferredSize(new java.awt.Dimension(51, 50));
+        exitTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout exitBtnLayout = new javax.swing.GroupLayout(exitBtn);
+        exitBtn.setLayout(exitBtnLayout);
+        exitBtnLayout.setHorizontalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(exitBtnLayout.createSequentialGroup()
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        exitBtnLayout.setVerticalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNoEnc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNomEnc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel11))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtPregu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtPregu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtPregu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespu3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtPregu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespu4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txtPregu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRespu5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnEditar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1143, Short.MAX_VALUE))
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+
+        bg.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1190, 50));
+
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
+
+        savePreguntasBtn.setText("Guardar preguntas");
+        savePreguntasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePreguntasBtnActionPerformed(evt);
+            }
+        });
+
+        doEncuestaBtn.setText("Hacer encuesta");
+        doEncuestaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doEncuestaBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(savePreguntasBtn)
+                .addGap(53, 53, 53)
+                .addComponent(doEncuestaBtn)
+                .addContainerGap(823, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(savePreguntasBtn)
+                    .addComponent(doEncuestaBtn))
+                .addContainerGap(76, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 1190, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -303,6 +389,10 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
 
         // Limpiar los campos después de agregar la encuesta
         btnLimpiarActionPerformed(evt);
+
+        // Alert
+        JOptionPane.showMessageDialog(null, "¡Se ha agregado correctamente!",
+                "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -330,6 +420,10 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         System.out.println("Encuesta actualizada correctamente.");
 
         btnLimpiarActionPerformed(evt);
+
+        // Alert
+        JOptionPane.showMessageDialog(null, "¡Se ha editado correctamente!",
+                "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -353,6 +447,20 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
             System.out.println("Encuesta encontrada: " + doc.toJson());
             break; // Solo mostramos el primer resultado
         }
+
+        // Obtener todas las encuestas y convertirlas en una lista
+        List<Document> documentos = encuestas.find(Filters.eq("Nº ENCUESTA", txtNoEnc.getText().trim())).into(new ArrayList<>());
+
+        // Limpiar el área de texto
+        txtaActualizar.setText("");
+
+        if (documentos.isEmpty()) {
+            txtaActualizar.setText("No hay encuestas almacenadas.");
+        } else {
+            for (Document doc : documentos) {
+                txtaActualizar.append("\n" + doc.toJson());
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -364,6 +472,10 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
 
         if (resultado.getDeletedCount() > 0) {
             System.out.println("Encuesta eliminada correctamente.");
+            btnLimpiarActionPerformed(evt);
+            // Alert
+            JOptionPane.showMessageDialog(null, "¡Se ha eliminado correctamente!",
+                    "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
         } else {
             System.out.println("No se encontró la encuesta para eliminar.");
         }
@@ -383,8 +495,102 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         txtRespu4.setText("");
         txtPregu5.setText("");
         txtRespu5.setText("");
+
+        txtaActualizar.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        // TODO add your handling code here:
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_headerMouseDragged
+
+    private void exitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnMouseClicked
+
+    private void exitBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitBtnMouseEntered
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_exitBtnMouseEntered
+
+    private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
+        exitBtn.setBackground(Color.red);
+        exitBtn.setForeground(Color.white);
+    }//GEN-LAST:event_exitTxtMouseEntered
+
+    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
+        exitBtn.setBackground(new Color(214, 217, 223));
+        exitBtn.setForeground(Color.black);
+    }//GEN-LAST:event_exitTxtMouseExited
+
+    private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitTxtMouseClicked
+
+    private void savePreguntasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePreguntasBtnActionPerformed
+        // Crear el documento con los datos del formulario
+        Document document = new Document()
+                .append("Nº ENCUESTA", txtNoEnc.getText().trim())
+                .append("TITULO DE ENCUESTA", txtNomEnc.getText().trim())
+                .append("PREGUNTA 1", txtPregu1.getText().trim())
+                .append("PREGUNTA 2", txtPregu2.getText().trim())
+                .append("PREGUNTA 3", txtPregu3.getText().trim())
+                .append("PREGUNTA 4", txtPregu4.getText().trim())
+                .append("PREGUNTA 5", txtPregu5.getText().trim());
+
+        // Insertar el documento en la colección
+        preguntas.insertOne(document);
+
+        System.out.println("Preguntas agregadas correctamente.");
+
+        // Limpiar los campos después de agregar la encuesta
+        btnLimpiarActionPerformed(evt);
+
+        // Alert
+        JOptionPane.showMessageDialog(null, "¡Se ha agregado correctamente!",
+                "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_savePreguntasBtnActionPerformed
+
+    private void doEncuestaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncuestaBtnActionPerformed
+        // Buscar en la colección usando el número de encuesta
+        FindIterable<Document> resultados = preguntas.find(Filters.eq("Nº ENCUESTA", txtNoEnc.getText().trim()));
+
+        // Si hay resultados, llenamos los campos con los datos de la encuesta
+        for (Document doc : resultados) {
+            txtNomEnc.setText(doc.getString("TITULO DE ENCUESTA"));
+            txtPregu1.setText(doc.getString("PREGUNTA 1"));
+            txtPregu2.setText(doc.getString("PREGUNTA 2"));
+            txtPregu3.setText(doc.getString("PREGUNTA 3"));
+            txtPregu4.setText(doc.getString("PREGUNTA 4"));
+            txtPregu5.setText(doc.getString("PREGUNTA 5"));
+
+            System.out.println("Encuesta encontrada: " + doc.toJson());
+            break; // Solo mostramos el primer resultado
+        }
+
+        // Obtener todas las preguntas y convertirlas en una lista
+        List<Document> documentos = preguntas.find(Filters.eq("Nº ENCUESTA", txtNoEnc.getText().trim())).into(new ArrayList<>());
+
+        // Limpiar el área de texto
+        txtaActualizar.setText("");
+
+        if (documentos.isEmpty()) {
+            txtaActualizar.setText("No hay preguntas almacenadas.");
+        } else {
+            for (Document doc : documentos) {
+                txtaActualizar.append("\n" + doc.toJson());
+            }
+        }
+    }//GEN-LAST:event_doEncuestaBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -556,15 +762,19 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     public void setTxtRespu5(JTextField txtRespu5) {
         this.txtRespu5 = txtRespu5;
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bg;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton doEncuestaBtn;
+    private javax.swing.JPanel exitBtn;
+    private javax.swing.JLabel exitTxt;
+    private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -576,8 +786,11 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton savePreguntasBtn;
     private javax.swing.JTextField txtNoEnc;
     private javax.swing.JTextField txtNomEnc;
     private javax.swing.JTextField txtPregu1;
@@ -590,5 +803,6 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     private javax.swing.JTextField txtRespu3;
     private javax.swing.JTextField txtRespu4;
     private javax.swing.JTextField txtRespu5;
+    private javax.swing.JTextArea txtaActualizar;
     // End of variables declaration//GEN-END:variables
 }

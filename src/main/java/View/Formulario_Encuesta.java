@@ -39,6 +39,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
             encuestas = db.getCollection("encuestas");
             preguntas = db.getCollection("preguntas");
             System.out.println("Conexión exitosa");
+
         } catch (Exception ex) {
             Logger.getLogger(Formulario_Encuesta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,6 +91,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        content = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         savePreguntasBtn = new javax.swing.JButton();
         doEncuestaBtn = new javax.swing.JButton();
@@ -240,7 +242,9 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         });
         bg.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(627, 412, -1, -1));
 
+        txtaActualizar.setEditable(false);
         txtaActualizar.setColumns(20);
+        txtaActualizar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtaActualizar.setRows(5);
         jScrollPane1.setViewportView(txtaActualizar);
 
@@ -316,6 +320,19 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
 
         bg.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1190, 50));
 
+        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
+        content.setLayout(contentLayout);
+        contentLayout.setHorizontalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 740, Short.MAX_VALUE)
+        );
+        contentLayout.setVerticalGroup(
+            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+
+        bg.add(content, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 740, 250));
+
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
 
         savePreguntasBtn.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -369,10 +386,29 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPregu1ActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+
+        String noEnc = txtNoEnc.getText().trim();
+        String nomEnc = txtNomEnc.getText().trim();
+
+        if (noEnc.isEmpty() || nomEnc.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Los campos 'Nº ENCUESTA' y 'TITULO DE ENCUESTA' son obligatorios.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si los campos obligatorios están vacíos
+        }
+
+        // Verificar que txtNoEnc sea un número
+        try {
+            Integer.parseInt(noEnc); // Intentamos convertir el texto a un número
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El campo 'Nº ENCUESTA' debe ser un número.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si no es un número
+        }
+
         // Crear el documento con los datos del formulario
         Document document = new Document()
-                .append("Nº ENCUESTA", txtNoEnc.getText().trim())
-                .append("TITULO DE ENCUESTA", txtNomEnc.getText().trim())
+                .append("Nº ENCUESTA", noEnc)
+                .append("TITULO DE ENCUESTA", nomEnc)
                 .append("PREGUNTA 1", txtPregu1.getText().trim())
                 .append("RESPUESTA 1", txtRespu1.getText().trim())
                 .append("PREGUNTA 2", txtPregu2.getText().trim())
@@ -480,6 +516,8 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
                     "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
         } else {
             System.out.println("No se encontró la encuesta para eliminar.");
+            JOptionPane.showMessageDialog(null, "No existe la encuesta con el número " + txtNoEnc.getText().trim(),
+                    "Acción realizada", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -539,10 +577,29 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void savePreguntasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePreguntasBtnActionPerformed
+
+        String noEnc = txtNoEnc.getText().trim();
+        String nomEnc = txtNomEnc.getText().trim();
+
+        if (noEnc.isEmpty() || nomEnc.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Los campos 'Nº ENCUESTA' y 'TITULO DE ENCUESTA' son obligatorios.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si los campos obligatorios están vacíos
+        }
+
+        // Verificar que txtNoEnc sea un número
+        try {
+            Integer.parseInt(noEnc); // Intentamos convertir el texto a un número
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El campo 'Nº ENCUESTA' debe ser un número.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si no es un número
+        }
+
         // Crear el documento con los datos del formulario
         Document document = new Document()
-                .append("Nº ENCUESTA", txtNoEnc.getText().trim())
-                .append("TITULO DE ENCUESTA", txtNomEnc.getText().trim())
+                .append("Nº ENCUESTA", noEnc)
+                .append("TITULO DE ENCUESTA", nomEnc)
                 .append("PREGUNTA 1", txtPregu1.getText().trim())
                 .append("PREGUNTA 2", txtPregu2.getText().trim())
                 .append("PREGUNTA 3", txtPregu3.getText().trim())
@@ -586,7 +643,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         txtaActualizar.setText("");
 
         if (documentos.isEmpty()) {
-            txtaActualizar.setText("No hay preguntas almacenadas.");
+            txtaActualizar.setText("No hay respuestas almacenadas.");
         } else {
             for (Document doc : documentos) {
                 txtaActualizar.append("\n" + doc.toJson());
@@ -773,6 +830,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JPanel content;
     private javax.swing.JButton doEncuestaBtn;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitTxt;

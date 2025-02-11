@@ -195,7 +195,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         bg.add(txtRespu5, new org.netbeans.lib.awtextra.AbsoluteConstraints(481, 323, 245, -1));
 
         btnAgregar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("Agregar encuesta");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -205,7 +205,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         bg.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 382, 1176, 10));
 
         btnBuscar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnBuscar.setText("Buscar");
+        btnBuscar.setText("Buscar encuesta");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -214,7 +214,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         bg.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 412, -1, -1));
 
         btnEditar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnEditar.setText("Editar");
+        btnEditar.setText("Editar encuesta");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -223,7 +223,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         bg.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(346, 412, -1, -1));
 
         btnEliminar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setText("Eliminar encuesta");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -232,7 +232,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         bg.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(489, 412, -1, -1));
 
         btnLimpiar.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        btnLimpiar.setText("Limpiar");
+        btnLimpiar.setText("Limpiar campos");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarActionPerformed(evt);
@@ -288,14 +288,14 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exitBtnLayout.createSequentialGroup()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addContainerGap())
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -304,20 +304,21 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1143, Short.MAX_VALUE))
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1139, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         bg.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1190, 50));
 
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, -1, -1));
 
+        savePreguntasBtn.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         savePreguntasBtn.setText("Guardar preguntas");
         savePreguntasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,6 +326,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
             }
         });
 
+        doEncuestaBtn.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         doEncuestaBtn.setText("Hacer encuesta");
         doEncuestaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,7 +343,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
                 .addComponent(savePreguntasBtn)
                 .addGap(53, 53, 53)
                 .addComponent(doEncuestaBtn)
-                .addContainerGap(823, Short.MAX_VALUE))
+                .addContainerGap(820, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +352,7 @@ public class Formulario_Encuesta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(savePreguntasBtn)
                     .addComponent(doEncuestaBtn))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 1190, 150));
